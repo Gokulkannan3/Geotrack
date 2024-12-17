@@ -6,13 +6,12 @@ function App() {
 
   useEffect(() => {
     let intervalId;
-
-    // Function to fetch the coordinates
     const fetchCoordinates = () => {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
           (position) => {
             const { latitude, longitude } = position.coords;
+            console.log(latitude,longitude);
             setCoordinates({ latitude, longitude });
           },
           (error) => {
@@ -25,11 +24,10 @@ function App() {
     };
 
     if (isTracking) {
-      fetchCoordinates(); // Initial fetch
-      intervalId = setInterval(fetchCoordinates, 3000); // Fetch every 3 seconds
+      fetchCoordinates();
+      intervalId = setInterval(fetchCoordinates, 1000);
     }
 
-    // Cleanup interval on component unmount or when tracking stops
     return () => clearInterval(intervalId);
   }, [isTracking]);
 
